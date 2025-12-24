@@ -86,10 +86,17 @@ vs = VideoStream(src=0).start()
 
 # loop over the frames from the video stream
 while True:
-	# grab the frame from the threaded video stream and resize it
-	# to have a maximum width of 400 pixels
-	frame = vs.read()
-	frame = imutils.resize(frame, width=400)
+    # grab the frame from the threaded video stream and resize it
+    # to have a maximum width of 400 pixels
+
+    frame = vs.read()
+    if frame is None:
+        print("[ERROR] Could not get frame from camera. Check connection.")
+        break
+
+    cv2.flip(frame, 0)
+
+    frame = imutils.resize(frame, width=400)
 
 	# detect faces in the frame and determine if they are wearing a
 	# face mask or not
